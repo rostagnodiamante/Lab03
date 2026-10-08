@@ -1,11 +1,14 @@
 import csv
-from operator import attrgetter
+from operator import attrgetter, itemgetter
+
+
 class DepositoStrumenti:
     def __init__(self, nome, responsabile):
         """Inizializza gli attributi e le strutture dati"""
         self.nome=nome
         self.responsabile=responsabile
         self.deposito={}
+        self.prestiti={}
 
     def carica_file_strumenti(self, file_path):
         """Carica gli strumenti dal file"""
@@ -64,8 +67,30 @@ class DepositoStrumenti:
 
     def nuovo_prestito(self, data, id_strumento, cognome_allievo):
         """Crea un nuovo prestito"""
+        contatore=0
+        for prestito in itemgetter(self.prestiti):
+            if self.deposito["prestito"]==True:
+                return f"lo strumento è già in prestito"
+            if self.prestiti["data"]== data:
+                if self.prestiti["id_strumento"] == id_strumento:
+                    if self.prestiti["cognome_allievo"] == cognome_allievo:
+                        return Exception
+            else:
+                contatore=+1
+                self.prestiti["codiceP"]=["P"+str(contatore)]
+                self.prestiti["data"]=data
+                self.prestiti["strumento"]=id_strumento
+                self.prestiti["cognome"]= cognome_allievo
+                self.deposito["prestito"]= True
 
 
     def termina_prestito(self, id_prestito):
         """Termina un prestito in atto"""
-        # TODO
+        for prestito in self.prestiti:
+            if id_prestito == self.prestiti["codiceP"]:
+                self.prestiti.pop(id_prestito)
+                self.prestiti.pop(self.prestiti["data"])
+                self.prestiti.pop(self.prestiti["struemento"])
+                self.prestiti.pop(self.prestiti["cognome"])
+            else:
+                return Exception
